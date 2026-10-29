@@ -3,8 +3,9 @@ import Image from "next/image"
 const alt = "ADIA-Framework, início"
 
 // O wordmark do logo é preto; no tema escuro troca pela versão clara.
+// shortcut: o navegador baixa as duas versões (~13 KB extra); evitar exigiria saber o tema no servidor.
 export function Logo({ eager = false }: { eager?: boolean }) {
-  const loading = eager ? "eager" : "lazy"
+  const fetchPriority = eager ? "high" : undefined
 
   return (
     <>
@@ -13,7 +14,7 @@ export function Logo({ eager = false }: { eager?: boolean }) {
         alt={alt}
         width={128}
         height={44}
-        loading={loading}
+        fetchPriority={fetchPriority}
         className="h-11 w-auto dark:hidden"
       />
       <Image
@@ -21,7 +22,7 @@ export function Logo({ eager = false }: { eager?: boolean }) {
         alt={alt}
         width={128}
         height={44}
-        loading={loading}
+        fetchPriority={fetchPriority}
         className="hidden h-11 w-auto dark:block"
       />
     </>
