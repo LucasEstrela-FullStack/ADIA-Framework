@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { ArrowDownIcon } from "lucide-react"
 
-import { CognitiveLoopFlow } from "@/components/cognitive-loop-flow"
 import { HeroLevels } from "@/components/hero-levels"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
@@ -15,11 +14,14 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-title"
-      className="mx-auto w-full max-w-6xl space-y-16 px-4 py-10 sm:px-6 md:space-y-20 md:py-24"
+      className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 md:py-24"
     >
       <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
         <div className="space-y-6">
-          <Badge variant="secondary" className={enter}>
+          <Badge
+            variant="secondary"
+            className={cn(enter, "h-auto py-0.5 text-left whitespace-normal")}
+          >
             ADIA-Framework · Faculdade de Tecnologia SENAI MT · 2026
           </Badge>
 
@@ -38,7 +40,7 @@ export function Hero() {
           </p>
 
           <div className={`${enter} flex flex-wrap gap-3 delay-300`}>
-            <Link href="#solucao" className={buttonVariants({ size: "lg" })}>
+            <Link href="#solucao" className={cn(buttonVariants({ size: "lg" }))}>
               Conhecer a solução
             </Link>
             <Link
@@ -58,8 +60,6 @@ export function Hero() {
           <HeroLevels />
         </div>
       </div>
-
-      <CognitiveLoopFlow />
     </section>
   )
 }
