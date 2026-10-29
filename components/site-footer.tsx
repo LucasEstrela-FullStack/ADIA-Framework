@@ -8,8 +8,14 @@ import { navItems } from "@/lib/navigation"
 
 const IDEA_YEAR = 2026
 
+const team = [
+  "Lucas Abreu Estrela",
+  "Kauã Marques Almeida",
+  "Adriano Vedana Vargas",
+  "Guilherme Athyde Miguéis Alves",
+] as const
+
 const projectFacts = [
-  { term: "Autor", detail: "Lucas Abreu Estrela" },
   { term: "Local e ano", detail: `Cuiabá-MT, ${IDEA_YEAR}` },
   { term: "Status", detail: "Protótipo em desenvolvimento" },
 ] as const
@@ -30,7 +36,7 @@ export function SiteFooter() {
     <footer className="mt-auto bg-muted/40">
       <FadingBar inView />
 
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[2fr_1fr_1fr] md:gap-8">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 md:gap-8 lg:grid-cols-[1.6fr_1fr_1.2fr_1fr]">
         <div className="max-w-sm space-y-4">
           <Link
             href="/"
@@ -65,6 +71,15 @@ export function SiteFooter() {
             ))}
           </ul>
         </nav>
+
+        <div>
+          <h2 className="mb-3 text-sm font-semibold">Equipe</h2>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            {team.map((name) => (
+              <li key={name}>{name}</li>
+            ))}
+          </ul>
+        </div>
 
         <div>
           <h2 className="mb-3 text-sm font-semibold">Projeto</h2>
