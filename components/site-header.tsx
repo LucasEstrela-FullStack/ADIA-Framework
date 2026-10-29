@@ -1,7 +1,6 @@
 "use client"
 
 import { useRef, useState } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { MenuIcon } from "lucide-react"
 import {
@@ -20,6 +19,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { FadingBar } from "@/components/fading-bar"
+import { Logo } from "@/components/logo"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { navItems } from "@/lib/navigation"
 import { cn } from "@/lib/utils"
 
@@ -58,100 +59,97 @@ export function SiteHeader() {
             href="/"
             className="shrink-0 rounded-md focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
           >
-            <Image
-              src="/img/adia-logo.png"
-              alt="ADIA-Framework, início"
-              width={128}
-              height={44}
-              loading="eager"
-              className="h-11 w-auto"
-            />
+            <Logo eager />
           </Link>
 
-          <nav aria-label="Principal" className="-mr-2 hidden md:block">
-            <ul className="flex gap-1" onMouseLeave={() => setHovered(null)}>
-              {navItems.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onPointerEnter={(event) =>
-                      event.pointerType === "mouse" && setHovered(item.href)
-                    }
-                    className="relative isolate inline-flex h-9 items-center rounded-lg px-3 text-sm font-medium text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
-                  >
-                    <AnimatePresence>
-                      {hovered === item.href && (
-                        <motion.span
-                          layoutId="nav-hover"
-                          aria-hidden
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 500,
-                            damping: 40,
-                          }}
-                          className="absolute inset-0 -z-10 rounded-lg bg-muted"
-                        />
-                      )}
-                    </AnimatePresence>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <Sheet
-            open={menuOpen}
-            onOpenChange={setMenuOpen}
-            onOpenChangeComplete={scrollToPending}
-          >
-            <SheetTrigger
-              render={
-                <Button variant="ghost" size="icon" className="size-11 md:hidden" />
-              }
-            >
-              <MenuIcon />
-              <span className="sr-only">Abrir menu</span>
-            </SheetTrigger>
-            <SheetContent
-              side="right"
-              finalFocus={false}
-              className="p-6 motion-reduce:data-ending-style:translate-x-0 motion-reduce:data-starting-style:translate-x-0"
-            >
-              <SheetTitle>Nesta página</SheetTitle>
-              <nav aria-label="Principal">
-                <ul className="flex flex-col gap-1">
-                  {navItems.map((item, index) => (
-                    <motion.li
-                      key={item.href}
-                      initial={{ x: 16, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{
-                        delay: 0.04 + index * 0.03,
-                        duration: 0.25,
-                        ease: easeOut,
-                      }}
+          <div className="-mr-2 flex items-center gap-1">
+            <nav aria-label="Principal" className="hidden md:block">
+              <ul className="flex gap-1" onMouseLeave={() => setHovered(null)}>
+                {navItems.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onPointerEnter={(event) =>
+                        event.pointerType === "mouse" && setHovered(item.href)
+                      }
+                      className="relative isolate inline-flex h-9 items-center rounded-lg px-3 text-sm font-medium text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
                     >
-                      <a
-                        href={item.href}
-                        onClick={(event) => {
-                          event.preventDefault()
-                          pendingHref.current = item.href
-                          setMenuOpen(false)
+                      <AnimatePresence>
+                        {hovered === item.href && (
+                          <motion.span
+                            layoutId="nav-hover"
+                            aria-hidden
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 500,
+                              damping: 40,
+                            }}
+                            className="absolute inset-0 -z-10 rounded-lg bg-muted"
+                          />
+                        )}
+                      </AnimatePresence>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+  
+            <ThemeToggle />
+  
+            <Sheet
+              open={menuOpen}
+              onOpenChange={setMenuOpen}
+              onOpenChangeComplete={scrollToPending}
+            >
+              <SheetTrigger
+                render={
+                  <Button variant="ghost" size="icon" className="size-11 md:hidden" />
+                }
+              >
+                <MenuIcon />
+                <span className="sr-only">Abrir menu</span>
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                finalFocus={false}
+                className="p-6 motion-reduce:data-ending-style:translate-x-0 motion-reduce:data-starting-style:translate-x-0"
+              >
+                <SheetTitle>Nesta página</SheetTitle>
+                <nav aria-label="Principal">
+                  <ul className="flex flex-col gap-1">
+                    {navItems.map((item, index) => (
+                      <motion.li
+                        key={item.href}
+                        initial={{ x: 16, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{
+                          delay: 0.04 + index * 0.03,
+                          duration: 0.25,
+                          ease: easeOut,
                         }}
-                        className="block rounded-md px-3 py-3 text-base font-medium hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
                       >
-                        {item.label}
-                      </a>
-                    </motion.li>
-                  ))}
-                </ul>
-              </nav>
-            </SheetContent>
-          </Sheet>
+                        <a
+                          href={item.href}
+                          onClick={(event) => {
+                            event.preventDefault()
+                            pendingHref.current = item.href
+                            setMenuOpen(false)
+                          }}
+                          className="block rounded-md px-3 py-3 text-base font-medium hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
+                        >
+                          {item.label}
+                        </a>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
 
         <FadingBar />

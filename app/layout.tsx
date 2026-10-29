@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
@@ -25,14 +26,23 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="pt-BR"
+      // next-themes troca a classe do <html> antes da hidratação.
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full scroll-pt-20 antialiased motion-safe:scroll-smooth`}
     >
       <body className="min-h-full flex flex-col">
-        <TooltipProvider>
-          <SiteHeader />
-          {children}
-          <SiteFooter />
-        </TooltipProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <TooltipProvider>
+            <SiteHeader />
+            {children}
+            <SiteFooter />
+          </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

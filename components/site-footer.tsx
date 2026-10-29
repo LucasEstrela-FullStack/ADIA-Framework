@@ -1,8 +1,8 @@
-import Image from "next/image"
 import Link from "next/link"
 import { cacheLife } from "next/cache"
 
 import { FadingBar } from "@/components/fading-bar"
+import { Logo } from "@/components/logo"
 import { Separator } from "@/components/ui/separator"
 import { navItems } from "@/lib/navigation"
 
@@ -42,13 +42,7 @@ export function SiteFooter() {
             href="/"
             className="inline-block rounded-md focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
           >
-            <Image
-              src="/img/adia-logo.png"
-              alt="ADIA-Framework, início"
-              width={128}
-              height={44}
-              className="h-11 w-auto"
-            />
+            <Logo />
           </Link>
           <p className="text-sm leading-relaxed text-muted-foreground">
             Pesquisa sobre como a ajuda de tutores de IA pode diminuir aos
