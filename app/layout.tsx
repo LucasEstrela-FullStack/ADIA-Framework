@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,6 +19,11 @@ export const metadata: Metadata = {
   title: { default: "ADIA-Framework", template: "%s · ADIA-Framework" },
   description:
     "Estratégia de tutoria com IA que reduz a ajuda aos poucos, em quatro níveis, conforme o aluno passa a resolver sozinho.",
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    siteName: "ADIA-Framework",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -37,11 +41,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           enableSystem
           disableTransitionOnChange
         >
-          <TooltipProvider>
-            <SiteHeader />
-            {children}
-            <SiteFooter />
-          </TooltipProvider>
+          <SiteHeader />
+          {children}
+          <SiteFooter />
         </ThemeProvider>
       </body>
     </html>
