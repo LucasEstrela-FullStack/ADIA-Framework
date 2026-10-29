@@ -80,7 +80,7 @@ export function SiteFooter() {
           <dl className="space-y-2 text-sm">
             {projectFacts.map((fact) => (
               <div key={fact.term}>
-                <dt className="sr-only">{fact.term}</dt>
+                <dt className="text-xs font-medium text-foreground">{fact.term}</dt>
                 <dd className="text-muted-foreground">{fact.detail}</dd>
               </div>
             ))}
