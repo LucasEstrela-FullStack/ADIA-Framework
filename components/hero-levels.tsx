@@ -65,8 +65,8 @@ export function HeroLevels() {
         <CardHeader>
           <CardTitle>Teto de ajuda da IA</CardTitle>
           <CardDescription>
-            O tutor só reduz a ajuda quando o aluno acerta sozinho, e não só
-            com ajuda.
+            Cada nível é um tipo de dica. O teto é a dica mais forte que o
+            tutor pode dar agora, e desce conforme o aluno resolve sozinho.
           </CardDescription>
           <CardAction>
             <Badge variant="outline" className="tabular-nums">
@@ -93,7 +93,7 @@ export function HeroLevels() {
                 >
                   <span
                     className={cn(
-                      "flex size-8 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors duration-400",
+                      "flex size-8 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors duration-400 motion-reduce:transition-none",
                       available
                         ? "bg-primary text-primary-foreground"
                         : "bg-muted text-muted-foreground"
@@ -127,8 +127,8 @@ export function HeroLevels() {
         <CardFooter className="justify-between gap-3">
           <p className="text-xs text-muted-foreground" aria-live="polite">
             {ceiling === 1
-              ? "Resta só a pergunta metacognitiva. Se o acerto sem ajuda cair abaixo de 40%, o teto volta a subir."
-              : "O teto desce quando o acerto sem ajuda chega a 80%, fica perto do acerto com ajuda e a confiança do aluno bate com esse acerto."}
+              ? "Resta só a pergunta metacognitiva. Se o acerto sem ajuda cair abaixo de 40% e o gap ficar em até 25 pontos, o teto sobe de novo."
+              : "O teto desce quando o acerto sem ajuda chega a 80%, o gap fica em até 25 pontos e a confiança difere do acerto em até 20 pontos."}
           </p>
           <Button
             variant="ghost"
