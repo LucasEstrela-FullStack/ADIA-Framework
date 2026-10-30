@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "Se usar este software, cite-o com os dados abaixo."
+title: "ADIA-Framework"
+abstract: "Portal da pesquisa ADIA-Framework e do CognitiveLoop: tutoria com IA que mede o acerto do aluno com e sem ajuda e reduz a ajuda conforme ele resolve sozinho."
+type: software
+authors:
+  - family-names: "Almeida"
+    given-names: "Kauã Marques"
+    affiliation: "UNISENAI Cuiabá"
+  - family-names: "Estrela"
+    given-names: "Lucas Abreu"
+    affiliation: "UNISENAI Cuiabá"
+  - family-names: "Vargas"
+    given-names: "Adriano Vedana"
+    affiliation: "UNISENAI Cuiabá"
+  - family-names: "Alves"
+    given-names: "Guilherme Athayde Miguéis"
+    affiliation: "UNISENAI Cuiabá"
+repository-code: "https://github.com/LucasEstrela-FullStack/ADIA-Framework"
+license: AGPL-3.0-only
+date-released: "2026-10-30"
+keywords:
+  - "tutoria inteligente"
+  - "inteligência artificial na educação"
+  - "fading"
+  - "metacognição"
+  - "STEAM"
