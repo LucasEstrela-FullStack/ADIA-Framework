@@ -8,8 +8,10 @@ import {
   ShieldCheckIcon,
 } from "lucide-react"
 
-import { DrawPath, Reveal } from "@/components/reveal"
+import { CeilingChart } from "@/components/ceiling-chart"
+import { Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
 
 interface Condition {
@@ -115,64 +117,12 @@ const pillars = [
   },
 ] as const
 
-// Geometria do mini-gráfico do teto (viewBox 120 × 48).
-const chart = { width: 120, height: 48, pad: 4 }
-
-function ceilingPath(ceiling: number[]) {
-  const step = (chart.width - chart.pad * 2) / ceiling.length
-  const y = (level: number) =>
-    chart.pad + ((4 - level) / 3) * (chart.height - chart.pad * 2)
-  return ceiling
-    .map((level, index) => {
-      const x = chart.pad + index * step
-      return `${index === 0 ? "M" : "L"}${x} ${y(level)} H${x + step}`
-    })
-    .join(" ")
-}
-
-function CeilingChart({ condition }: { condition: Condition }) {
-  const levels = condition.ceiling.map((level) => `L${level}`).join(", ")
-  return (
-    <figure className="space-y-1.5">
-      <svg
-        viewBox={`0 0 ${chart.width} ${chart.height}`}
-        preserveAspectRatio="none"
-        role="img"
-        aria-label={`Ilustração, não dado do experimento. Teto de ajuda por ciclo na condição ${condition.letter}: ${levels}.`}
-        className="h-16 w-full overflow-visible"
-      >
-        {[1, 2, 3, 4].map((level) => {
-          const y =
-            chart.pad + ((4 - level) / 3) * (chart.height - chart.pad * 2)
-          return (
-            <line
-              key={level}
-              x1={chart.pad}
-              x2={chart.width - chart.pad}
-              y1={y}
-              y2={y}
-              className="stroke-border"
-              strokeDasharray="2 3"
-              vectorEffect="non-scaling-stroke"
-            />
-          )
-        })}
-        <DrawPath
-          d={ceilingPath(condition.ceiling)}
-          width={chart.width}
-          height={chart.height}
-          className={cn(
-            condition.highlight ? "stroke-primary" : "stroke-muted-foreground",
-          )}
-        />
-      </svg>
-      <figcaption className="flex justify-between text-[11px] text-muted-foreground">
-        <span>Teto: L4 mais ajuda, L1 menos</span>
-        <span>ciclos →</span>
-      </figcaption>
-    </figure>
-  )
-}
+const tabs = [
+  { value: "condicoes", label: "Condições" },
+  { value: "ciclo", label: "Ciclo" },
+  { value: "prototipo", label: "Protótipo" },
+  { value: "fundamentos", label: "Fundamentos" },
+] as const
 
 export function ResearchSection() {
   return (
@@ -181,45 +131,54 @@ export function ResearchSection() {
       aria-labelledby="pesquisa-title"
       className="border-t bg-muted/30"
     >
-      <div className="mx-auto w-full max-w-6xl space-y-14 px-4 py-16 sm:px-6 md:py-24">
+      <div className="mx-auto w-full max-w-6xl space-y-10 px-4 py-16 sm:px-6 md:py-24">
         <SectionHeading
           id="pesquisa-title"
           eyebrow="A pesquisa"
           title="Três jeitos de dosar a ajuda da IA, medidos com os mesmos testes"
           lead="O objetivo é avaliar se ajustar a ajuda pela diferença entre o acerto com e sem a IA melhora a autonomia, a autorregulação e a transferência do conhecimento para atividades novas."
         />
-        <p className="-mt-8 max-w-2xl leading-relaxed text-pretty text-muted-foreground">
+        <p className="-mt-4 max-w-2xl leading-relaxed text-pretty text-muted-foreground">
           O estudo está em preparação. Ele replica o método de pesquisas já
           publicadas, que comparam grupos com IA sem limites e com IA que só dá
           pistas (Bastani et al., 2025), e acrescenta desafios STEAM para medir
           se o aluno aplica o que aprendeu em problemas novos.
         </p>
 
-        <div className="space-y-5">
-          <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <h3 className="text-lg font-semibold tracking-tight">
-              As três condições
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Avaliação futura · amostra definida por cálculo amostral
-            </p>
-          </div>
-          <ul className="grid gap-4 md:grid-cols-3">
-            {conditions.map((condition, index) => (
-              <Reveal
-                as="li"
-                index={index}
-                key={condition.letter}
-                className={cn(
-                  "flex flex-col gap-4 rounded-xl border bg-card p-5",
-                  condition.highlight && "border-primary/50 ring-1 ring-primary/20",
-                )}
-              >
-                <div className="flex items-center gap-3">
+        {/* keepMounted: o conteúdo das abas fechadas continua no HTML, para busca e sem JavaScript. */}
+        <Tabs defaultValue="condicoes" className="gap-6">
+          <TabsList className="grid w-full grid-cols-2 group-data-horizontal/tabs:h-auto sm:inline-flex sm:w-fit">
+            {tabs.map((tab) => (
+              <TabsTrigger key={tab.value} value={tab.value} className="h-8 px-3">
+                {tab.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+
+          <TabsContent value="condicoes" keepMounted className="space-y-5">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 className="text-lg font-semibold tracking-tight">
+                As três condições
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Avaliação futura · amostra definida por cálculo amostral
+              </p>
+            </div>
+            <ul className="grid gap-4 md:grid-cols-3">
+              {conditions.map((condition, index) => (
+                <Reveal
+                  as="li"
+                  index={index}
+                  key={condition.letter}
+                  className={cn(
+                    "flex gap-3 rounded-xl border bg-card p-5",
+                    condition.highlight && "border-primary/50 ring-1 ring-primary/20",
+                  )}
+                >
                   <span
                     aria-hidden
                     className={cn(
-                      "flex size-9 items-center justify-center rounded-md font-mono text-sm font-semibold",
+                      "flex size-9 shrink-0 items-center justify-center rounded-md font-mono text-sm font-semibold",
                       condition.highlight
                         ? "bg-primary text-primary-foreground"
                         : "bg-muted text-muted-foreground",
@@ -227,32 +186,28 @@ export function ResearchSection() {
                   >
                     {condition.letter}
                   </span>
-                  <h4 className="font-semibold">
-                    <span className="sr-only">Condição {condition.letter}: </span>
-                    {condition.name}
-                  </h4>
-                </div>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {condition.rule}
-                </p>
-                <div className="mt-auto">
-                  <CeilingChart condition={condition} />
-                </div>
-              </Reveal>
-            ))}
-          </ul>
-          <p className="text-xs text-muted-foreground">
-            Os gráficos ilustram o comportamento de cada regra. Não são dados
-            do experimento.
-          </p>
-        </div>
+                  <div className="space-y-1">
+                    <h4 className="font-semibold">
+                      <span className="sr-only">Condição {condition.letter}: </span>
+                      {condition.name}
+                    </h4>
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {condition.rule}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </ul>
+            <div className="rounded-xl border bg-card p-5">
+              <CeilingChart conditions={conditions} />
+            </div>
+          </TabsContent>
 
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-          <div className="space-y-5">
+          <TabsContent value="ciclo" keepMounted className="space-y-5">
             <h3 className="text-lg font-semibold tracking-tight">
               O ciclo, em seis etapas
             </h3>
-            <ol className="relative ml-3 space-y-6 border-l pl-6">
+            <ol className="relative ml-3 grid gap-6 border-l pl-6 md:grid-cols-2 md:gap-x-10">
               {protocol.map((step, index) => (
                 <Reveal as="li" index={index} key={step.title} className="relative">
                   <span
@@ -271,10 +226,10 @@ export function ResearchSection() {
                 </Reveal>
               ))}
             </ol>
-          </div>
+          </TabsContent>
 
-          <div className="space-y-8">
-            <div className="space-y-4 rounded-xl border bg-card p-6">
+          <TabsContent value="prototipo" keepMounted>
+            <div className="max-w-3xl space-y-4 rounded-xl border bg-card p-6">
               <div className="flex items-center gap-2">
                 <FlaskConicalIcon aria-hidden className="size-4 text-primary" />
                 <h3 className="font-semibold">O protótipo roda localmente</h3>
@@ -299,25 +254,25 @@ export function ResearchSection() {
                 ))}
               </ul>
             </div>
+          </TabsContent>
 
-            <div className="space-y-3">
-              <h3 className="text-lg font-semibold tracking-tight">
-                Em que a pesquisa se apoia
-              </h3>
-              <dl className="divide-y rounded-xl border bg-card">
-                {pillars.map((pillar) => (
-                  <div key={pillar.name} className="grid gap-1 p-4 sm:grid-cols-[11rem_1fr] sm:gap-4">
-                    <dt className="text-sm font-semibold">{pillar.name}</dt>
-                    <dd className="space-y-1">
-                      <p className="text-sm text-muted-foreground">{pillar.concept}</p>
-                      <p className="text-xs text-muted-foreground">({pillar.cite})</p>
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </div>
-        </div>
+          <TabsContent value="fundamentos" keepMounted className="space-y-3">
+            <h3 className="text-lg font-semibold tracking-tight">
+              Em que a pesquisa se apoia
+            </h3>
+            <dl className="max-w-3xl divide-y rounded-xl border bg-card">
+              {pillars.map((pillar) => (
+                <div key={pillar.name} className="grid gap-1 p-4 sm:grid-cols-[11rem_1fr] sm:gap-4">
+                  <dt className="text-sm font-semibold">{pillar.name}</dt>
+                  <dd className="space-y-1">
+                    <p className="text-sm text-muted-foreground">{pillar.concept}</p>
+                    <p className="text-xs text-muted-foreground">({pillar.cite})</p>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </TabsContent>
+        </Tabs>
       </div>
     </section>
   )

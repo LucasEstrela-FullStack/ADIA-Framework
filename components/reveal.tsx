@@ -1,7 +1,6 @@
 "use client"
 
 import { motion } from "motion/react"
-import { useId } from "react"
 
 import { easeOut } from "@/lib/motion"
 
@@ -26,45 +25,5 @@ export function Reveal({ children, index = 0, as = "div", className }: RevealPro
     >
       {children}
     </Component>
-  )
-}
-
-interface DrawPathProps {
-  d: string
-  /** Largura e altura do viewBox do SVG. */
-  width: number
-  height: number
-  className?: string
-}
-
-// Revela a linha do teto da esquerda para a direita quando entra na tela.
-// Recorte em vez de pathLength: o tracejado do pathLength quebra com non-scaling-stroke.
-export function DrawPath({ d, width, height, className }: DrawPathProps) {
-  const clipId = useId()
-  return (
-    <motion.g
-      initial="hidden"
-      whileInView="shown"
-      viewport={{ once: true, amount: 0.8 }}
-    >
-      <clipPath id={clipId}>
-        <motion.rect
-          x={0}
-          y={-4}
-          height={height + 8}
-          variants={{ hidden: { width: 0 }, shown: { width } }}
-          transition={{ duration: 1.2, ease: easeOut }}
-        />
-      </clipPath>
-      <path
-        d={d}
-        fill="none"
-        strokeWidth={2}
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-        clipPath={`url(#${clipId})`}
-        className={className}
-      />
-    </motion.g>
   )
 }
