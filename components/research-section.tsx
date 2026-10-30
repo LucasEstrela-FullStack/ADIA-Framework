@@ -42,26 +42,37 @@ const conditions: Condition[] = [
   },
 ]
 
+// Ciclo de seis etapas do artigo CognitiveLoop/ADIA (seção 3.2).
 const protocol = [
   {
-    title: "Ciclos de prática",
-    body: "Cada aluno pratica na sua condição. O sistema registra o acerto com e sem ajuda, a confiança declarada e quantas dicas ele pede.",
-    measures: "viés metacognitivo (confiança menos acerto) e Dose de Suporte Solicitada (DSS)",
+    title: "Linha de base sem IA",
+    body: "O aluno resolve itens sozinho e diz, em cada um, o quanto confia na resposta.",
+    measures: "acerto e confiança iniciais",
   },
   {
-    title: "Teste sem IA",
-    body: "O aluno resolve sozinho, sem acesso ao tutor.",
-    measures: "Taxa de Acerto Independente (TAI)",
+    title: "Prática assistida",
+    body: "O tutor libera dicas até o teto do ciclo. Cada pedido de dica fica registrado.",
+    measures: "Dose de Suporte Solicitada (DSS)",
   },
   {
-    title: "Desafio STEAM",
-    body: "Problemas novos e interdisciplinares, diferentes dos praticados, para ver se o conhecimento se transfere.",
+    title: "Desafio independente",
+    body: "Itens equivalentes aos da prática, mas não idênticos, para não confundir memória com domínio.",
+    measures: "Taxa de Acerto Independente (TAI), gap e viés",
+  },
+  {
+    title: "Regulação",
+    body: "A regra do CognitiveLoop define o teto de ajuda do próximo ciclo. Sem itens válidos, nada muda.",
+    measures: "decisão registrada com o motivo",
+  },
+  {
+    title: "Transferência STEAM",
+    body: "Um problema novo, de preferência num projeto STEAM, em que o aluno justifica as escolhas.",
     measures: "Taxa de Transferência (TT)",
   },
   {
-    title: "Pós-teste após 7 dias",
-    body: "O mesmo tipo de avaliação, uma semana depois, para medir o que ficou.",
-    measures: "retenção do aprendizado",
+    title: "Retenção após 7 dias",
+    body: "Nova avaliação sem ajuda, comparável à imediata, para ver o que ficou.",
+    measures: "retenção (ΔRET)",
   },
 ] as const
 
@@ -74,7 +85,7 @@ interface StackItem {
 const stack: StackItem[] = [
   { icon: BrainCircuitIcon, name: "Ollama", role: "LLM local, de código aberto" },
   { icon: SearchIcon, name: "RAG com bge-m3", role: "Busca as dicas no banco de problemas" },
-  { icon: ShieldCheckIcon, name: "Guardrail", role: "Bloqueia a entrega da resposta pronta" },
+  { icon: ShieldCheckIcon, name: "Guardrail", role: "Filtra a resposta pronta (em validação)" },
   { icon: ServerIcon, name: "FastAPI", role: "Executa o CognitiveLoop" },
   { icon: DatabaseIcon, name: "SQLite", role: "Guarda acertos, confiança e dicas" },
 ]
@@ -191,7 +202,7 @@ export function ResearchSection() {
               As três condições
             </h3>
             <p className="text-sm text-muted-foreground">
-              Desenho previsto: 30 estudantes por condição · Cuiabá-MT
+              Avaliação futura · amostra definida por cálculo amostral
             </p>
           </div>
           <ul className="grid gap-4 md:grid-cols-3">
@@ -238,7 +249,7 @@ export function ResearchSection() {
         <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <div className="space-y-5">
             <h3 className="text-lg font-semibold tracking-tight">
-              O protocolo, em ordem
+              O ciclo, em seis etapas
             </h3>
             <ol className="relative ml-3 space-y-6 border-l pl-6">
               {protocol.map((step, index) => (
@@ -269,7 +280,8 @@ export function ResearchSection() {
               </div>
               <p className="text-sm leading-relaxed text-muted-foreground">
                 Modelos de linguagem abertos rodam num servidor isolado, sem
-                depender de serviços externos.
+                depender de serviços externos. As tecnologias abaixo estão
+                previstas ou em protótipo.
               </p>
               <ul className="grid gap-3 sm:grid-cols-2">
                 {stack.map((item) => (
