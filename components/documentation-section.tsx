@@ -7,6 +7,12 @@ import {
 
 import { Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 interface Repository {
   icon: LucideIcon
@@ -178,32 +184,42 @@ export function DocumentationSection() {
             </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold tracking-tight">
-              Referências
-            </h3>
-            <ol className="divide-y rounded-xl border bg-card">
-              {references.map((ref) => (
-                <li key={ref.href}>
-                  <a
-                    href={ref.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`group block p-4 transition-colors hover:bg-muted/60 ${linkFocus}`}
-                  >
-                    <span className="flex items-start justify-between gap-3 text-xs text-muted-foreground">
-                      {ref.cite}
-                      <ExternalLinkIcon aria-hidden className="mt-0.5 size-3.5 shrink-0" />
-                    </span>
-                    <span className="mt-1 block text-sm font-medium" lang="en">
-                      {ref.title}
-                    </span>
-                    <span className="sr-only"> (DOI, abre em nova aba)</span>
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </div>
+          {/* hiddenUntilFound: a lista fechada continua no HTML e a busca do navegador abre o painel. */}
+          <Accordion hiddenUntilFound className="rounded-xl border bg-card px-4">
+            <AccordionItem value="referencias">
+              <AccordionTrigger className="py-4 text-base hover:no-underline">
+                <span className="space-y-0.5">
+                  <span className="block font-semibold">Referências</span>
+                  <span className="block text-sm font-normal text-muted-foreground">
+                    {references.length} fontes com DOI conferido
+                  </span>
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="pb-0 [&_a]:no-underline">
+                <ol className="-mx-4 divide-y border-t">
+                  {references.map((ref) => (
+                    <li key={ref.href}>
+                      <a
+                        href={ref.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`group block p-4 transition-colors hover:bg-muted/60 ${linkFocus}`}
+                      >
+                        <span className="flex items-start justify-between gap-3 text-xs text-muted-foreground">
+                          {ref.cite}
+                          <ExternalLinkIcon aria-hidden className="mt-0.5 size-3.5 shrink-0" />
+                        </span>
+                        <span className="mt-1 block text-sm font-medium" lang="en">
+                          {ref.title}
+                        </span>
+                        <span className="sr-only"> (DOI, abre em nova aba)</span>
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </div>
     </section>
