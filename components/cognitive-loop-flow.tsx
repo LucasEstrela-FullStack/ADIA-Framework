@@ -98,7 +98,7 @@ export function CognitiveLoopFlow() {
             <h3 className="text-sm font-semibold">
               Passo 4 · O teto se ajusta
             </h3>
-            <span className="flex items-center gap-1 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1 text-xs text-foreground/75">
               <RepeatIcon aria-hidden className="size-3.5" />
               volta ao passo 1
             </span>

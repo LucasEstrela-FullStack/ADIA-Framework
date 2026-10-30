@@ -111,11 +111,22 @@ export function HeroLevels() {
                     >
                       {level.name}
                     </span>
-                    <span className="block text-xs text-muted-foreground">
+                    {/* Sobre o fundo verde, o muted fica abaixo de 4,5:1 no tema claro. */}
+                    <span
+                      className={cn(
+                        "block text-xs",
+                        available ? "text-foreground/75" : "text-muted-foreground"
+                      )}
+                    >
                       {level.hint}
                     </span>
                   </span>
-                  <span className="shrink-0 text-xs text-muted-foreground">
+                  <span
+                    className={cn(
+                      "shrink-0 text-xs",
+                      available ? "text-foreground/75" : "text-muted-foreground"
+                    )}
+                  >
                     {isCeiling ? "teto" : available ? "disponível" : "acima do teto"}
                   </span>
                 </li>

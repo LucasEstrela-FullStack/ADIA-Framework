@@ -90,7 +90,7 @@ export function ChallengeSection() {
       className="border-t bg-muted/30"
     >
       <div className="mx-auto w-full max-w-6xl space-y-14 px-4 py-16 sm:px-6 md:py-24">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
           <div className="space-y-6">
             <SectionHeading
               id="desafio-title"
