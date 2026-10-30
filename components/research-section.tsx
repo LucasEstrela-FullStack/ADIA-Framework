@@ -178,6 +178,12 @@ export function ResearchSection() {
           title="Três jeitos de dosar a ajuda da IA, medidos com os mesmos testes"
           lead="O objetivo é avaliar se ajustar a ajuda pela diferença entre o acerto com e sem a IA melhora a autonomia, a autorregulação e a transferência do conhecimento para atividades novas."
         />
+        <p className="-mt-8 max-w-2xl leading-relaxed text-pretty text-muted-foreground">
+          O estudo está em preparação. Ele replica o método de pesquisas já
+          publicadas, que comparam grupos com IA sem limites e com IA que só dá
+          pistas (Bastani et al., 2025), e acrescenta desafios STEAM para medir
+          se o aluno aplica o que aprendeu em problemas novos.
+        </p>
 
         <div className="space-y-5">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -185,7 +191,7 @@ export function ResearchSection() {
               As três condições
             </h3>
             <p className="text-sm text-muted-foreground">
-              30 estudantes por condição · Cuiabá-MT, 1º semestre de 2026
+              Desenho previsto: 30 estudantes por condição · Cuiabá-MT
             </p>
           </div>
           <ul className="grid gap-4 md:grid-cols-3">
