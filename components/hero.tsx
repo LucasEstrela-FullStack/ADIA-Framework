@@ -22,7 +22,7 @@ export function Hero() {
             variant="secondary"
             className={cn(enter, "h-auto py-0.5 text-left whitespace-normal")}
           >
-            ADIA-Framework · Faculdade de Tecnologia SENAI MT · 2026
+            ADIA-Framework · UNISENAI Cuiabá · 2026
           </Badge>
 
           <h1
