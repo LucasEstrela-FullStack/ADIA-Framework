@@ -5,6 +5,7 @@ import { FadingBar } from "@/components/fading-bar"
 import { Logo } from "@/components/logo"
 import { Separator } from "@/components/ui/separator"
 import { navItems } from "@/lib/navigation"
+import { cn } from "@/lib/utils"
 
 const IDEA_YEAR = 2026
 
@@ -34,6 +35,9 @@ async function CopyrightYears() {
 
 const linkClass =
   "rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
+
+// Sublinhado: link dentro de frase precisa se distinguir do texto sem depender da cor.
+const licenseLinkClass = "text-xs underline underline-offset-2"
 
 export function SiteFooter() {
   return (
@@ -95,9 +99,33 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <Separator />
         <div className="flex flex-col gap-2 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © <CopyrightYears /> ADIA-Framework
-          </p>
+          <div className="space-y-1">
+            <p>
+              © <CopyrightYears /> ADIA-Framework. Todos os direitos sobre o
+              nome e a marca reservados aos autores.
+            </p>
+            <p>
+              Código sob{" "}
+              <a
+                href="https://www.gnu.org/licenses/agpl-3.0.html"
+                target="_blank"
+                rel="noopener noreferrer license"
+                className={cn(linkClass, licenseLinkClass)}
+              >
+                AGPL-3.0<span className="sr-only"> (abre em nova aba)</span>
+              </a>
+              . Textos e figuras sob{" "}
+              <a
+                href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt-br"
+                target="_blank"
+                rel="noopener noreferrer license"
+                className={cn(linkClass, licenseLinkClass)}
+              >
+                CC BY-NC-SA 4.0<span className="sr-only"> (abre em nova aba)</span>
+              </a>
+              .
+            </p>
+          </div>
           <p>Aprendizado inteligente. Pessoas em evolução.</p>
         </div>
       </div>
