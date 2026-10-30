@@ -12,7 +12,7 @@ const team = [
   "Lucas Abreu Estrela",
   "Kauã Marques Almeida",
   "Adriano Vedana Vargas",
-  "Guilherme Athyde Miguéis Alves",
+  "Guilherme Athayde Miguéis Alves",
 ] as const
 
 const projectFacts = [
