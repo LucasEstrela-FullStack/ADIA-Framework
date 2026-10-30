@@ -100,12 +100,12 @@ const pillars = [
   {
     name: "Offloading e metacognição",
     concept: "Evitar que o aluno terceirize o raciocínio e calibrar a confiança.",
-    cite: "Hefter, 2026; Pinto et al., 2025",
+    cite: "Hefter, 2026; Lee et al., 2025",
   },
   {
     name: "Tutores inteligentes e guardrails",
     concept: "Dicas graduais L1 a L4, nunca a resposta.",
-    cite: "Pardos e Bhandari, 2024; Medeiros et al., 2026",
+    cite: "Wood, Bruner e Ross, 1976; Pardos e Bhandari, 2024",
   },
   {
     name: "Orquestração do suporte",
