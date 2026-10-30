@@ -1,5 +1,6 @@
 import { TriangleAlertIcon } from "lucide-react"
 
+import { Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
 
 const hypotheses = [
@@ -88,8 +89,10 @@ export function MetricsSection() {
             O que o estudo vai testar
           </h3>
           <ul className="grid gap-4 md:grid-cols-3">
-            {hypotheses.map((hypothesis) => (
-              <li
+            {hypotheses.map((hypothesis, index) => (
+              <Reveal
+                as="li"
+                index={index}
                 key={hypothesis.code}
                 className="flex gap-3 rounded-xl border bg-card p-5"
               >
@@ -99,7 +102,7 @@ export function MetricsSection() {
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   {hypothesis.body}
                 </p>
-              </li>
+              </Reveal>
             ))}
           </ul>
           <p className="text-sm text-muted-foreground">
@@ -113,8 +116,10 @@ export function MetricsSection() {
             Como cada indicador é calculado
           </h3>
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {indicators.map((indicator) => (
-              <li
+            {indicators.map((indicator, index) => (
+              <Reveal
+                as="li"
+                index={index}
                 key={indicator.code}
                 className="flex flex-col gap-3 rounded-xl border bg-card p-5"
               >
@@ -137,7 +142,7 @@ export function MetricsSection() {
                     <dd>{indicator.exception}</dd>
                   </div>
                 </dl>
-              </li>
+              </Reveal>
             ))}
           </ul>
         </div>

@@ -5,6 +5,7 @@ import {
   MonitorIcon,
 } from "lucide-react"
 
+import { Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
 
 interface Repository {
@@ -146,8 +147,8 @@ export function DocumentationSection() {
                 Repositórios
               </h3>
               <ul className="space-y-3">
-                {repositories.map((repo) => (
-                  <li key={repo.name}>
+                {repositories.map((repo, index) => (
+                  <Reveal as="li" index={index} key={repo.name}>
                     <a
                       href={repo.href}
                       target="_blank"
@@ -171,7 +172,7 @@ export function DocumentationSection() {
                         <span className="sr-only"> (GitHub, abre em nova aba)</span>
                       </span>
                     </a>
-                  </li>
+                  </Reveal>
                 ))}
               </ul>
             </div>

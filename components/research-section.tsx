@@ -8,6 +8,7 @@ import {
   ShieldCheckIcon,
 } from "lucide-react"
 
+import { DrawPath, Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
 import { cn } from "@/lib/utils"
 
@@ -156,12 +157,10 @@ function CeilingChart({ condition }: { condition: Condition }) {
             />
           )
         })}
-        <path
+        <DrawPath
           d={ceilingPath(condition.ceiling)}
-          fill="none"
-          strokeWidth={2}
-          strokeLinejoin="round"
-          vectorEffect="non-scaling-stroke"
+          width={chart.width}
+          height={chart.height}
           className={cn(
             condition.highlight ? "stroke-primary" : "stroke-muted-foreground",
           )}
@@ -206,8 +205,10 @@ export function ResearchSection() {
             </p>
           </div>
           <ul className="grid gap-4 md:grid-cols-3">
-            {conditions.map((condition) => (
-              <li
+            {conditions.map((condition, index) => (
+              <Reveal
+                as="li"
+                index={index}
                 key={condition.letter}
                 className={cn(
                   "flex flex-col gap-4 rounded-xl border bg-card p-5",
@@ -237,7 +238,7 @@ export function ResearchSection() {
                 <div className="mt-auto">
                   <CeilingChart condition={condition} />
                 </div>
-              </li>
+              </Reveal>
             ))}
           </ul>
           <p className="text-xs text-muted-foreground">
@@ -253,7 +254,7 @@ export function ResearchSection() {
             </h3>
             <ol className="relative ml-3 space-y-6 border-l pl-6">
               {protocol.map((step, index) => (
-                <li key={step.title} className="relative">
+                <Reveal as="li" index={index} key={step.title} className="relative">
                   <span
                     aria-hidden
                     className="absolute top-0.5 -left-[37px] flex size-6 items-center justify-center rounded-full border bg-background font-mono text-[11px] font-medium text-muted-foreground"
@@ -267,7 +268,7 @@ export function ResearchSection() {
                   <p className="mt-2 text-xs font-medium text-primary">
                     Mede: {step.measures}
                   </p>
-                </li>
+                </Reveal>
               ))}
             </ol>
           </div>
