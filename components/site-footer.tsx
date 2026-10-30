@@ -16,8 +16,12 @@ const team = [
 ] as const
 
 const projectFacts = [
+  {
+    term: "Instituição",
+    detail: "UNISENAI Cuiabá, Centro Universitário SENAI Mato Grosso",
+  },
+  { term: "Professor Orientador", detail: "Prof. Paulo Guilherme Paes da Silva" },
   { term: "Local e ano", detail: `Cuiabá-MT, ${IDEA_YEAR}` },
-  { term: "Status", detail: "Protótipo em desenvolvimento" },
 ] as const
 
 // Revalida 1x por dia: o ano vira sozinho sem novo deploy.
@@ -36,7 +40,7 @@ export function SiteFooter() {
     <footer className="mt-auto bg-muted/40">
       <FadingBar inView />
 
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 md:gap-8 lg:grid-cols-[1.6fr_1fr_1.2fr_1fr]">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 md:gap-8 lg:grid-cols-[1.3fr_0.7fr_1fr_1.5fr]">
         <div className="max-w-sm space-y-4">
           <Link
             href="/"
@@ -67,7 +71,7 @@ export function SiteFooter() {
         </nav>
 
         <div>
-          <h2 className="mb-3 text-sm font-semibold">Equipe</h2>
+          <h2 className="mb-3 text-sm font-semibold">Autores</h2>
           <ul className="space-y-2 text-sm text-muted-foreground">
             {team.map((name) => (
               <li key={name}>{name}</li>
