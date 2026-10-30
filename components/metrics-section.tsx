@@ -2,6 +2,8 @@ import { TriangleAlertIcon } from "lucide-react"
 
 import { Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const hypotheses = [
   {
@@ -115,54 +117,62 @@ export function MetricsSection() {
           <h3 className="text-lg font-semibold tracking-tight">
             Como cada indicador é calculado
           </h3>
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {indicators.map((indicator, index) => (
-              <Reveal
-                as="li"
-                index={index}
+          <Tabs defaultValue={indicators[0].code} className="gap-4">
+            <TabsList className="grid w-full grid-cols-3 group-data-horizontal/tabs:h-auto sm:inline-flex sm:w-fit">
+              {indicators.map((indicator) => (
+                <TabsTrigger
+                  key={indicator.code}
+                  value={indicator.code}
+                  className="h-8 px-3 font-mono"
+                >
+                  {indicator.code}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+            {indicators.map((indicator) => (
+              <TabsContent
                 key={indicator.code}
-                className="flex flex-col gap-3 rounded-xl border bg-card p-5"
+                value={indicator.code}
+                keepMounted
+                className="grid max-w-3xl gap-4 rounded-xl border bg-card p-5 sm:grid-cols-[1fr_1fr]"
               >
-                <div>
-                  <p className="font-mono text-xs font-semibold text-primary">
-                    {indicator.code}
-                  </p>
+                <div className="space-y-3">
                   <h4 className="font-semibold">{indicator.name}</h4>
+                  <p className="rounded-md bg-muted px-3 py-2 font-mono text-sm">
+                    {indicator.formula}
+                  </p>
                 </div>
-                <p className="rounded-md bg-muted px-3 py-2 font-mono text-sm">
-                  {indicator.formula}
-                </p>
-                <dl className="mt-auto space-y-1 text-xs text-muted-foreground">
-                  <div className="flex gap-1">
-                    <dt className="font-medium text-foreground">Escala:</dt>
+                <dl className="space-y-2 text-sm text-muted-foreground">
+                  <div>
+                    <dt className="font-medium text-foreground">Escala</dt>
                     <dd>{indicator.range}</dd>
                   </div>
-                  <div className="flex gap-1">
-                    <dt className="font-medium text-foreground">Exceção:</dt>
+                  <div>
+                    <dt className="font-medium text-foreground">Exceção</dt>
                     <dd>{indicator.exception}</dd>
                   </div>
                 </dl>
-              </Reveal>
+              </TabsContent>
             ))}
-          </ul>
+          </Tabs>
         </div>
 
-        <div className="flex gap-3 rounded-xl border border-amber-500/40 bg-amber-500/5 p-5">
+        <Alert role="note" className="gap-1 border-amber-500/40 bg-amber-500/5 p-5">
           <TriangleAlertIcon
             aria-hidden
-            className="mt-0.5 size-5 shrink-0 text-amber-600 dark:text-amber-400"
+            className="text-amber-600! dark:text-amber-400!"
           />
-          <div className="space-y-1">
-            <p className="font-semibold">Nenhum indicador é lido sozinho</p>
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              Um aluno que acerta 20% com e sem IA tem IIC igual a 1 sem
-              dominar o conteúdo. Por isso o IIC aparece sempre junto da TAI e
-              do número de itens. Com 4 itens, um único acerto muda a taxa em 25
-              pontos. Com 20 itens, muda 5. Por isso as decisões exigem itens
-              suficientes em cada ciclo.
-            </p>
-          </div>
-        </div>
+          <AlertTitle className="font-semibold">
+            Nenhum indicador é lido sozinho
+          </AlertTitle>
+          <AlertDescription className="leading-relaxed">
+            Um aluno que acerta 20% com e sem IA tem IIC igual a 1 sem dominar
+            o conteúdo. Por isso o IIC aparece sempre junto da TAI e do número
+            de itens. Com 4 itens, um único acerto muda a taxa em 25 pontos.
+            Com 20 itens, muda 5. Por isso as decisões exigem itens suficientes
+            em cada ciclo.
+          </AlertDescription>
+        </Alert>
       </div>
     </section>
   )
