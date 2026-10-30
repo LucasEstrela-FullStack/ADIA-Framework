@@ -11,7 +11,6 @@ import {
 } from "lucide-react"
 import { motion } from "motion/react"
 
-import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 
 interface Step {
@@ -20,48 +19,24 @@ interface Step {
   body: string
 }
 
+// Etapas 2 a 4 do ciclo do artigo CognitiveLoop/ADIA (seção 3.2).
 const steps: Step[] = [
   {
-    icon: PencilLineIcon,
-    title: "Etapa independente",
-    body: "O aluno resolve problemas sem a IA. Daqui sai o acerto sem ajuda (independente).",
+    icon: MessageCircleQuestionIcon,
+    title: "Prática assistida",
+    body: "O tutor dá pistas só até o teto atual (L1 a L4), nunca a resposta. Daqui sai o acerto com ajuda (A).",
   },
   {
-    icon: MessageCircleQuestionIcon,
-    title: "Etapa assistida",
-    body: "O tutor dá pistas só até o teto atual (L1 a L4), nunca a resposta. Daqui sai o acerto com ajuda (assistido).",
+    icon: PencilLineIcon,
+    title: "Desafio independente",
+    body: "Itens equivalentes, sem a IA. O aluno diz o quanto confia em cada resposta. Daqui saem o acerto sem ajuda (I) e a confiança (C).",
   },
   {
     icon: ScaleIcon,
-    title: "Fim do ciclo: comparação",
-    body: "Gap: acerto com ajuda menos acerto sem ajuda. Viés: confiança declarada menos acerto sem ajuda.",
+    title: "Comparação",
+    body: "Gap: G = A − I. Viés: B = C − I. Sem itens válidos, não há comparação.",
   },
 ]
-
-// Limiares do dossiê (0,8 / 0,25 / 0,2 / 0,4) escritos em % e pontos percentuais.
-const decisions = [
-  {
-    label: "Fading",
-    effect: "Teto desce um nível",
-    when: "Sem ajuda ≥ 80%, gap ≤ 25 pontos e |viés| ≤ 20 pontos",
-    highlight: true,
-  },
-  {
-    label: "Onloading",
-    effect: "Teto se mantém e o aluno explica antes da dica",
-    when: "Gap > 25 pontos",
-  },
-  {
-    label: "Escalonar",
-    effect: "Teto sobe um nível",
-    when: "Sem ajuda < 40% e gap ≤ 25 pontos",
-  },
-  {
-    label: "Manter",
-    effect: "Nada muda",
-    when: "Qualquer outro caso",
-  },
-] as const
 
 // Só desloca, sem esconder: o texto aparece mesmo sem JavaScript.
 const reveal = {
@@ -103,24 +78,11 @@ export function CognitiveLoopFlow() {
               volta ao passo 1
             </span>
           </div>
-          <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-            {decisions.map((decision) => (
-              <li
-                key={decision.label}
-                className="space-y-1 rounded-lg border bg-background p-3"
-              >
-                <Badge
-                  variant={"highlight" in decision ? "default" : "outline"}
-                >
-                  {decision.label}
-                </Badge>
-                <p className="text-sm font-medium">{decision.effect}</p>
-                <p className="text-xs text-muted-foreground">
-                  {decision.when}
-                </p>
-              </li>
-            ))}
-          </ul>
+          <p className="text-sm leading-relaxed text-foreground/75">
+            A regra escolhe, em ordem de prioridade, entre reduzir a ajuda,
+            pedir explicação, elevar a ajuda ou manter. Teste no simulador
+            abaixo.
+          </p>
         </div>
       </FlowItem>
     </ol>
